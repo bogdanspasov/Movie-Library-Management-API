@@ -1,0 +1,23 @@
+-- Create database
+CREATE DATABASE IF NOT EXISTS final_progress_review_task;
+USE final_progress_review_task;
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('USER','ADMIN') NOT NULL
+);
+
+-- Movies table
+CREATE TABLE IF NOT EXISTS movies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    director VARCHAR(255),
+    release_year INT,
+    rating FLOAT
+);
+
+INSERT INTO users (username, password, role)
+VALUES ('admin', 'admin', 'ADMIN');

@@ -76,7 +76,12 @@ def delete_movie(id: int, x_token=Header()):
 
 
 @movies_router.put('/{id}')
-def update_movie(id: int, update_data: MovieUpdate, x_token=Header()):
+def update_movie(
+    id: int,
+    update_data: MovieUpdate,
+    background_tasks: BackgroundTasks,
+    x_token=Header()
+):
     user = get_user_or_raise_401(x_token)
 
     if not user.is_admin():
@@ -86,9 +91,18 @@ def update_movie(id: int, update_data: MovieUpdate, x_token=Header()):
     if not movie:
         return NotFound(f"Movie with id {id} not found")
 
+    old_title = movie.title
+
     updated_movie = movie_service.update(update_data, movie)
 
     if not updated_movie:
         return InternalServerError()
+
+    if update_data.title != old_title:
+        background_tasks.add_task(
+            OMDb_service.enrich_movie_rating,
+            updated_movie.id,
+            updated_movie.title
+        )
 
     return updated_movie

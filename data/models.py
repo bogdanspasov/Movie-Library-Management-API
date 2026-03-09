@@ -7,7 +7,7 @@ class Movie(BaseModel):
     title: str
     director: str
     release_year: int
-    rating: float
+    rating: float | None = None
 
     @classmethod
     def from_query_result(cls, id, title, director, release_year, rating):
@@ -25,7 +25,7 @@ class MovieUpdate(BaseModel):
     title: str
     director: str
     release_year: int
-    rating: float
+    rating: float | None = None
 
 
 
@@ -34,7 +34,7 @@ class MovieResponse(BaseModel):
     title: str
     director: str
     release_year: int
-    rating: float
+    rating: float | None = None
 
 
 

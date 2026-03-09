@@ -8,7 +8,7 @@ def create(username: str, password: str) -> User | None:
     # password = _hash_password(password)
     try:
         generated_id = insert_query(
-            'INSERT INTO users(username, password, role) VALUES (?,?,?)',
+            'INSERT INTO users(username, password, role) VALUES (%s,%s,%s)',
             (username, password, Role.USER))
 
         return User(id=generated_id, username=username, password='', role=Role.USER)
@@ -33,7 +33,7 @@ def create_token(user: User) -> str:
 
 def is_authenticated(token: str) -> bool:
     return any(read_query(
-        'SELECT 1 FROM users where id = ? and username = ?',
+        'SELECT 1 FROM users where id = %s and username = %s',
         # note: this token is not particulary secure, use JWT for real-world user
         token.split(_SEPARATOR)))
 
@@ -46,7 +46,7 @@ def from_token(token: str) -> User | None:
 
 def find_by_username(username: str) -> User | None:
     data = read_query(
-        'SELECT id, username, password, role FROM users WHERE username = ?',
+        'SELECT id, username, password, role FROM users WHERE username = %s',
         (username,))
 
     return next((User.from_query_result(*row) for row in data), None)

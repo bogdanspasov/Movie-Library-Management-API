@@ -76,14 +76,3 @@ def update(movie_update: MovieUpdate, movie: Movie):
 def delete(movie: Movie):
     update_query('DELETE FROM movies WHERE id = %s', (movie.id,))
 
-
-def create_response_object(movie: Movie, title: str, director: str, release_year: int, rating: float):
-
-    # changed to model for better http://127.0.0.1:8000/docs
-    return MovieResponse(
-        id = movie.id,
-        title = title,
-        director = director,
-        release_year = release_year,
-        rating = rating)
-

@@ -54,7 +54,7 @@ def get_movie_by_id(id: int, x_token=Header()):
     movie = movie_service.get_by_id(id)
 
     if movie is None:
-        return Forbidden(f"Movie with id {id} not found")
+        return NotFound(f"Movie with id {id} not found")
     else:
         return movie
 
@@ -67,8 +67,8 @@ def delete_movie(id: int, x_token=Header()):
         return Forbidden('Only Admins can delete movies')
 
     movie = movie_service.get_by_id(id)
-    # if not movie:
-    #     return NotFound(f"Movie with id {id} not found")
+    if not movie:
+        return NotFound(f"Movie with id {id} not found")
 
     movie_service.delete(movie)
     return NoContent()

@@ -27,14 +27,14 @@ def try_login(username: str, password: str) -> User | None:
 
 
 def create_token(user: User) -> str:
-    # note: this token is not particulary secure, use JWT for real-world uses
+    # note: this token is not particularly secure, use JWT for real-world uses
     return f'{user.id}{_SEPARATOR}{user.username}'
 
 
 def is_authenticated(token: str) -> bool:
     return any(read_query(
         'SELECT 1 FROM users where id = %s and username = %s',
-        # note: this token is not particulary secure, use JWT for real-world user
+        # note: this token is not particularly secure, use JWT for real-world user
         token.split(_SEPARATOR)))
 
 

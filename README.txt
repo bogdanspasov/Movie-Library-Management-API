@@ -16,5 +16,6 @@ one of which will print an active URL (e.g. http://127.0.0.1:8000)
 -Open the URL in the Browser; specify to the end of the link "/docs"
 (so it looks like http://127.0.0.1:8000/docs, if you are using localhost)
 -The FastAPI interface should appear, giving access to all the available API endpoints
+-If you want to stop the API, just click Ctrl+c in the terminal
 
 -Have fun testing the application :D
